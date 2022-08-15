@@ -1,0 +1,5 @@
+data/TED_TEST.csv
+data/TED_TRAIN.csv
+data/crf_restorer.pickle
+out/
+.idea/
