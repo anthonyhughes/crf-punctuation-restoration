@@ -3,3 +3,4 @@ data/TED_TRAIN.csv
 data/crf_restorer.pickle
 out/
 .idea/
+inference-results.csv
