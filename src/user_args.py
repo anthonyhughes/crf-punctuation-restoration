@@ -14,4 +14,9 @@ def parse_inference_arguments():
 
 def parse_train_arguments():
     parser = argparse.ArgumentParser(description='Punctuation restoration for training')
-    return {}
+    parser.add_argument('--trained_model_path', default='./data/crf_restorer.pickle', type=str,
+                        help='the final trained model is stored here')
+    parser.add_argument('--training_data_location', default='./data/TED_TRAIN.csv', type=str,
+                        help='list of documents used for training')
+    args = parser.parse_args()
+    return args

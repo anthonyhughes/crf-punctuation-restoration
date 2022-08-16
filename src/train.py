@@ -4,10 +4,10 @@ import pandas as pd
 import pycrfsuite
 
 from constants import DATA_ROOT
+from user_args import parse_train_arguments
 from utils.feature_extraction import doc_to_features, doc_to_classes
 
-TRAIN_READ_PATH = DATA_ROOT + 'TED_TRAIN.csv'
-TRAINED_MODEL_PATH = DATA_ROOT + 'crf_restorer.pickle'
+args = parse_train_arguments()
 
 
 # ====================
@@ -41,7 +41,7 @@ def hyperparameter_selection(
 
 
 # ====================
-def train(training_data_location):
+def train(training_data_location, trained_model_path):
     print('Beginning train')
 
     data = read_train_data(training_data_location)
@@ -58,9 +58,9 @@ def train(training_data_location):
 
     print(trainer.params())
 
-    trainer.train(TRAINED_MODEL_PATH)
+    trainer.train(trained_model_path)
     print('Training complete')
 
 
 if __name__ == '__main__':
-    train(TRAIN_READ_PATH)
+    train(args.training_data_location, args.trained_model_path)
