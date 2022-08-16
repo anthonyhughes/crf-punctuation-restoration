@@ -1,7 +1,10 @@
 import pycrfsuite
-from constants import TRAINED_MODEL_PATH
+import pandas as pd
+from user_args import parse_inference_arguments
 
 from utils.feature_extraction import doc_to_features
+
+args = parse_inference_arguments()
 
 
 # ====================
@@ -41,27 +44,32 @@ def restore(doc: str, tagger: pycrfsuite.Tagger) -> str:
 
 
 # ====================
-def read_trained_model():
+def read_trained_model(trained_model_path: str) -> pycrfsuite.Tagger:
     """Restore a trained model"""
     print('Reading model')
     tagger = pycrfsuite.Tagger()
-    tagger.open(TRAINED_MODEL_PATH)
+    tagger.open(trained_model_path)
     return tagger
 
 
 # ====================
-def infer(model, input: str):
+def infer(model: pycrfsuite.Tagger, input_file: str, output_file: str):
     print('Beginning Inference')
-    prediction = restore(input, model)
-    print(prediction)
+    input_df = pd.read_csv(input_file)
+    output_df = pd.DataFrame(columns=['results'])
+    for i, j in input_df.iterrows():
+        to_be_inferred = j['lower']
+        prediction = restore(to_be_inferred, model)
+        output_df = pd.concat(
+            [
+                output_df,
+                pd.DataFrame(({'results': prediction}), index=[f'{i}'])
+            ],
+            ignore_index=False)
+    output_df.to_csv(output_file)
+    print('Inference Completed')
 
 
 if __name__ == '__main__':
-    model = read_trained_model()
-    infer(model,
-          'the anger in me against corruption made me to make a big career change last year becoming a full time '
-          'practicing lawyer my experiences over the last 18 months as a lawyer has seeded in me a new entrepreneurial '
-          'idea which i believe is indeed worth spreading so i share it with all of you here today though the idea '
-          'itself is getting crystallized and im still writing up the business plan of course it helps that fear '
-          'of public failure diminishes'
-          )
+    model = read_trained_model(args.trained_model_path)
+    infer(model, args.input_file, args.output_file)

@@ -29,7 +29,7 @@ def read_train_data(training_data_location):
 def hyperparameter_selection(
         c1: float = 1.0,
         c2: float = 1e-3,
-        max_iterations: int = 50,
+        max_iterations: int = 75,
         possible_transitions: bool = True) -> Dict:
     return {
         'c1': c1,  # coefficient for L1 penalty

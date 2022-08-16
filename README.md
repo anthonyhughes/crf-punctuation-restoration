@@ -9,7 +9,7 @@ E.g.
 
 The model is based on the works of [Lui, M. and Wang, L. (2013), 'Recovering Casing and Punctuation using Conditional Random Fields'](https://aclanthology.org/U13-1020.pdf).
 
-This model treats the task a multi-class token classification task where classification is applied to sequence of words.
+The task here is a multi-class token classification task where classification is applied to sequence of words.
 
 The CRF model takes into account the word, POS tag, chunk tags, and NE tags for the current word and two words either side (i.e. 5-gram model)
 
@@ -41,30 +41,14 @@ Example usage for the operations covered below is also included in the example n
 ### Training
 
 Example usage:
-```python
-from train import train
-train('../data/TED_TRAIN.csv')
+```bash
+python train.py
 ```
 
-### Read a saved model
+### Run inference on a list of documents
 
-```python
-from inference import read_trained_model
-model = read_trained_model()
-```
-
-### Run inference on a single text
-
-```python
-from inference import read_trained_model, infer
-model = read_trained_model()
-infer(model,
-          'the anger in me against corruption made me to make a big career change last year becoming a full time '
-          'practicing lawyer my experiences over the last 18 months as a lawyer has seeded in me a new entrepreneurial '
-          'idea which i believe is indeed worth spreading so i share it with all of you here today though the idea '
-          'itself is getting crystallized and im still writing up the business plan of course it helps that fear '
-          'of public failure diminishes'
-      )
+```bash
+python inference.py
 ```
 
 ####
