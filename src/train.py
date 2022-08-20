@@ -1,11 +1,12 @@
 from typing import Dict
-
 import pandas as pd
 import pycrfsuite
-
-from constants import DATA_ROOT
 from user_args import parse_train_arguments
 from utils.feature_extraction import doc_to_features, doc_to_classes
+import nltk
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 
 args = parse_train_arguments()
 

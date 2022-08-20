@@ -1,8 +1,11 @@
 import pycrfsuite
 import pandas as pd
 from user_args import parse_inference_arguments
-
 from utils.feature_extraction import doc_to_features
+import nltk
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 
 args = parse_inference_arguments()
 
