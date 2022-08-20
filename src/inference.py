@@ -56,12 +56,12 @@ def read_trained_model(trained_model_path: str) -> pycrfsuite.Tagger:
 
 
 # ====================
-def infer(model: pycrfsuite.Tagger, input_file: str, output_file: str):
+def infer(model: pycrfsuite.Tagger, input_file: str, output_file: str, input_file_target_column: str):
     print('Beginning Inference')
     input_df = pd.read_csv(input_file)
     output_df = pd.DataFrame(columns=['results'])
     for i, j in input_df.iterrows():
-        to_be_inferred = j['lower']
+        to_be_inferred = j[input_file_target_column]
         prediction = restore(to_be_inferred, model)
         output_df = pd.concat(
             [
@@ -75,4 +75,4 @@ def infer(model: pycrfsuite.Tagger, input_file: str, output_file: str):
 
 if __name__ == '__main__':
     model = read_trained_model(args.trained_model_path)
-    infer(model, args.input_file, args.output_file)
+    infer(model, args.input_file, args.output_file, args.input_file_target_column)
